@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Editar Salida</title>
+
+    <!--FAVICON-->
+    <link rel="icon" type="image/png" href="/img/icons8-coser-16.png" />
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+    <!--CSS PERSONALIZADO-->
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/entrada-add.css" />
+    <link rel="stylesheet" href="css/alerta-agre-insumo.css" />
+
+    <!-- CSRF -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <div layout:fragment="content">
+        <!-- AQUI VA EL CONTENIDO DE LA PAGINA -->
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <div
+            class="d-sm-flex align-items-center justify-content-between mb-2"
+          >
+            <h1 class="h3 mb-0 text-gray-800">Editar Salida</h1>
+
+            <a th:href="@{/salidas}" class="btn btn-secondary btn-icon-split">
+              <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+              </span>
+              <span class="text">Volver</span>
+            </a>
+          </div>
+          <p class="mb-3">
+            Completa los campos con la información y detalles del insumo para
+            registrarlo en el inventario.
+          </p>
+          <!-- FORMULARIO -->
+          <div class="p-3">
+            <form id="formSalida" class="needs-validation" novalidate>
+              <div class="card1 shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Selección de Insumos
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-5 position-relative">
+                      <label for="nombre" class="form-label"
+                        >Nombre del insumo:</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        name="nombre"
+                        autocomplete="off"
+                        placeholder="Buscar insumo..."
+                      />
+                      <input
+                        type="hidden"
+                        id="insumoIdSeleccionado"
+                        name="idInsumo"
+                      />
+                      <div
+                        id="sugerencias"
+                        class="list-group position-absolute w-100 z-index-1000"
+                      ></div>
+                    </div>
+
+                    <div class="col-3">
+                      <label for="cantidad" class="form-label required"
+                        >Cantidad:</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="cantidad"
+                        name="cantidad"
+                        min="0"
+                        step="0.01"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Por favor ingrese una cantidad válida.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                      <button
+                        type="button"
+                        id="btnAgregarInsumo"
+                        class="btn btn-primary btn-block"
+                      >
+                        <i class="fas fa-plus mr-1"></i> Agregar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TABLA DE INSUMOS -->
+              <div class="card3 shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Lista de Insumos
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      class="table table-bordered"
+                      id="tablaInsumos"
+                      width="100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Cantidad</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tabla-insumos"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INFO GENERAL -->
+              <div class="card2 shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Información General de la Salida
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label for="fecha" class="form-label required"
+                        >Fecha de Salida:</label
+                      >
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="fecha"
+                        name="fecha"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        Por favor seleccione una fecha.
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                      <label for="descripcion" class="form-label"
+                        >Descripción:</label
+                      >
+                      <textarea
+                        class="form-control"
+                        id="descripcion"
+                        name="descripcion"
+                        rows="3"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mb-4">
+                <button type="button" class="btn btn-secondary mr-2" id="btnLimpiar">
+                  <i class="fas fa-eraser mr-1"></i> Limpiar Formulario
+                </button>
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-save mr-1"></i> Guardar Salida
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <div layout:fragment="scripts">
+      <!-- Bootstrap -->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+      <!-- Template -->
+      <script src="js/sb-admin-2.min.js"></script>
+
+      <!-- 🔥 SWEETALERT2 -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <!-- TU SCRIPT FINAL CON SWEET ALERT -->
+      <script src="/js/editar-salida.js"></script>
+    </div>
+  </body>
+</html>

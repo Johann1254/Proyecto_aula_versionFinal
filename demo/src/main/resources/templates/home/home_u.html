@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout_u}">
+
+<head>
+  <title>Dashboard - Usuario</title>
+</head>
+
+<body>
+
+  <div layout:fragment="content">
+    <div class="container-fluid">
+
+      <!-- ENCABEZADO -->
+      <h1 class="h3 mb-3 text-gray-800">Bienvenido al Panel de Usuario</h1>
+      <p class="mb-4">
+        Aquí puedes gestionar tus pedidos, revisar reportes y usar herramientas del sistema.
+      </p>
+
+      <!-- TARJETAS -->
+      <div class="row">
+        <!-- Uniformes -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                    Uniformes Registrados
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalUniformes}">0</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-tshirt fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colegios -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                    Colegios Registrados
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalColegios} ?: 0">0</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-school fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESOS DIRECTOS -->
+      <div class="row mb-4">
+        <div class="col-md-4 mb-2">
+          <a th:href="@{/calculadora}" class="btn btn-primary btn-block">
+            <i class="fas fa-calculator mr-2"></i> Ir a la Calculadora
+          </a>
+        </div>
+
+        <div class="col-md-4 mb-2">
+          <a th:href="@{/colegio/listar}" class="btn btn-success btn-block">
+            <i class="fas fa-school mr-2"></i> Ver Colegios
+          </a>
+        </div>
+
+        <div class="col-md-4 mb-2">
+          <a th:href="@{/reportes}" class="btn btn-info btn-block">
+            <i class="fas fa-file-alt mr-2"></i> Generar Reporte
+          </a>
+        </div>
+      </div>
+
+      <!-- MOVIMIENTOS -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card shadow mb-4">
+
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-info">Últimos movimientos</h6>
+            </div>
+
+            <div class="card-body">
+
+              <div th:if="${#lists.isEmpty(movimientos)}">
+                <p>No hay movimientos recientes.</p>
+              </div>
+
+              <ul th:if="${!#lists.isEmpty(movimientos)}">
+                <li th:each="mov : ${movimientos}">
+                  <strong th:text="${mov.descripcion}"></strong>
+                  <small class="text-muted d-block" th:text="${mov.fecha}"></small>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRÁFICO -->
+      <div class="row">
+        <div class="col-lg-12 mb-4">
+          <div class="card shadow">
+
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Uniformes por colegio</h6>
+            </div>
+
+            <div class="card-body">
+              <canvas id="graficoDashboard" height="80"></canvas>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      <!-- SCRIPT DEL GRÁFICO -->
+      <script th:inline="javascript">
+
+        // Convertimos el Map de Spring a JS
+        const datos = /*[[${graficoUniformes}]]*/ {};
+
+        console.log("Datos recibidos:", datos); // para debug
+
+        const labels = Object.keys(datos);
+        const valores = Object.values(datos);
+
+        const canvas = document.getElementById('graficoDashboard');
+
+        if (!canvas) {
+          console.error("No se encontró el canvas para el gráfico");
+        } else {
+          const ctx = canvas.getContext('2d');
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Uniformes por colegio',
+                data: valores,
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: true
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    precision: 0
+                  }
+                }
+              }
+            }
+          });
+        }
+      </script>
+
+
+    </div>
+  </div>
+
+</body>
+
+</html>

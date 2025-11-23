@@ -1,0 +1,218 @@
+:root {
+  --primary: #0b3d91;
+  --secondary: #f4f6fb;
+  --accent: #ffffff;
+  --text: #333;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  color: var(--text);
+  background: var(--secondary);
+  scroll-behavior: smooth;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--primary);
+  color: white;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo img {
+  width: 45px;
+  height: 45px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color:rgb(0, 176, 80);
+}
+
+.btn-login {
+  background: rgb(0, 176, 80);
+  color: var(--primary) ; /* <-- cambia el color del texto a azul */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  font-weight: bold;
+  
+}
+
+.btn-login:hover {
+  background: #ffffff;
+  color: var(--primary)!important ;
+  transform: scale(1.05);
+  font-weight: bold;
+} 
+
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* ===== HERO ===== */
+.hero {
+  height: 90vh;
+  background: url('/img/fondo_login.png') repeat center center fixed; /* Patrón */
+  background-color: var(--primary); /* Azul base */
+  background-size: 300px auto; /* Ajusta el tamaño del patrón */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(11, 61, 145, 0.8); /* Azul con transparencia */
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h2 {
+  font-size: 2.8rem;
+  font-weight: 700;
+}
+
+.hero span {
+  color: rgb(0, 176, 80); /* Verde del logo */
+}
+
+.hero p {
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.btn-primary {
+  background: rgb(0, 176, 80);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1.5rem;
+  transition: 0.3s;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #ffffff;
+  color: var(--primary);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.about p {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* ===== FEATURES ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 2rem 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* ===== CONTACT ===== */
+.contact p {
+  margin: 0.5rem 0;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: var(--primary);
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    text-align: right;
+    padding: 1rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}

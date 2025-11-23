@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout_u}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Insumos</title>
+     <link rel="icon" type="image/png" href="/img/icons8-coser-16.png" />
+    <link rel="stylesheet" href="/css/sb-admin-2.min.css" />
+    <link rel="stylesheet" href="/css/calculadora.css">
+
+    <link rel="stylesheet" href="css/dashboard.css" />
+
+</head>
+
+<div layout:fragment="content">
+    <div class="container mt-4">
+        
+
+        <!-- Selección de Colegio y Uniforme -->
+        <div class="card shadow p-4">
+            <h3 class="text-center mb-4">Calculadora de Insumos</h3>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="selectColegio" class="form-label">Colegio:</label>
+                    <select id="selectColegio" class="form-select"></select>
+                </div>
+                <div class="col-md-4">
+                    <label for="selectUniforme" class="form-label">Uniforme:</label>
+                    <select id="selectUniforme" class="form-select"></select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="cantidadPedido" class="form-label fw-bold">Cantidad de uniformes:</label>
+                    <input id="cantidadPedido" type="number" min="1" class="form-control"
+                        placeholder="Ingrese cantidad" />
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button id="verificar" class="btn btn-primary w-100">Verificar Disponibilidad</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultado -->
+        <div id="resultado" class="mt-4"></div>
+    </div>
+
+</div>
+
+<div layout:fragment="scripts">
+    <script src="/js/calculadora.js"></script>
+</div>
+
+
+</html>

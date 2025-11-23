@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Usuarios</title>
+
+  <!-- FontAwesome -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900" rel="stylesheet" />
+
+  <!-- Estilos del template -->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+
+  <!-- DataTables -->
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/alerta-eliminar-usuario.css" />
+</head>
+
+<body id="page-top">
+
+  <div id="wrapper">
+
+    <!-- Contenido principal -->
+    <div layout:fragment="content">
+      <div class="container-fluid">
+
+        <!-- Título y botón -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
+          <a href="/usuarios/nuevo" class="btn btn-primary btn-sm shadow-sm">
+            <i class="fas fa-user-plus fa-sm text-white-50"></i> Nuevo Usuario
+          </a>
+        </div>
+
+        <p class="mb-3">Administra los usuarios registrados en el sistema.</p>
+
+        <!-- Tabla de usuarios -->
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lista de Usuarios</h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- DataTables llenará los datos automáticamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Fin del fragmento de contenido -->
+
+  </div>
+
+  <!-- Scripts -->
+  <div layout:fragment="scripts">
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript -->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Template scripts -->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Scripts personalizados -->
+    <script src="/js/usuarios.js"></script>
+    <script src="/js/eliminar-usuario.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </div>
+
+</body>
+
+</html>

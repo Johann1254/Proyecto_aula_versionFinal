@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" th:href="@{/img/logo_miniatura.png}">
+  <title>CostuSoft Control | Sistema de Inventario y Pedidos</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://kit.fontawesome.com/7c88b1b1a8.js" crossorigin="anonymous"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" th:href="@{/css/landing.css}">
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="logo">
+      <img th:src="@{/img/logo_miniatura.png}" alt="Logo">
+      <h1>CostuSoft Control</h1>
+    </div>
+    <nav class="nav-links">
+      <a href="#about">Sobre el sistema</a>
+      <a href="#features">Características</a>
+      <a href="#contact">Contacto</a>
+      <a th:href="@{/login}" class="btn-login">Iniciar Sesión</a>
+    </nav>
+    <div class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </div>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Tu sistema inteligente de <span>inventario y pedidos</span></h2>
+      <p>Control total de tus insumos, puntada a puntada.</p>
+      <a th:href="@{/login}" class="btn-primary">Entrar al Sistema</a>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section about">
+    <h2>Sobre el Sistema</h2>
+    <p>
+      CostuSoft Control es una solución integral que facilita la gestión de inventarios y pedidos.
+      Diseñado especialmente para empresas textiles, permite mantener el control total.
+    </p>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section id="features" class="section features">
+    <h2>Características Principales</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-box"></i>
+        <h3>Control de Inventario</h3>
+        <p>Gestiona entradas, salidas y niveles de stock en tiempo real.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-shopping-cart"></i>
+        <h3>Gestión de Pedidos</h3>
+        <p>Controla pedidos por cliente, estado y fecha de entrega.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Reportes en Línea</h3>
+        <p>Visualiza informes de inventario, entradas y salidas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section contact">
+    <h2>Contáctanos</h2>
+    <p>¿Necesitas más información o una demostración personalizada?</p>
+    <p><i class="fas fa-envelope"></i> soporte@costusoft.com</p>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>© 2025 CostuSoft Control — Sistema de Inventario y Pedidos</p>
+  </footer>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    // Animación de menú móvil
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav-links');
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+
+    // Scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

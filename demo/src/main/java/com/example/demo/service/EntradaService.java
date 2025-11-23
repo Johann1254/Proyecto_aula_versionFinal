@@ -1,0 +1,129 @@
+package com.example.demo.service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.demo.model.mongo.DetalleEntrada;
+import com.example.demo.model.mongo.Entrada;
+import com.example.demo.model.mongo.Insumo;
+import com.example.demo.repos.mongo.EntradaRepository;
+import com.example.demo.repos.mongo.InsumoRepository;
+
+@Service
+public class EntradaService {
+
+    @Autowired
+    private EntradaRepository entradaRepository;
+
+    @Autowired
+    private InsumoRepository insumoRepository;
+
+    // LISTAR ENTRADA
+    public List<Entrada> listarEntradas() {
+        return entradaRepository.findAll();
+    }
+
+    public List<Entrada> listarEntradasPaginadas(int page, int size) {
+        return entradaRepository.findAll(PageRequest.of(page, size)).getContent();
+    }
+
+    // OBTENER ENTRADA POR ID
+    public Optional<Entrada> obtenerEntradaPorId(String id) {
+        return entradaRepository.findById(id);
+    }
+
+    // GUARDAR NUEVA ENTRADA Y ACTUALIZAR STOCK DE INSUMOS
+    @Transactional
+    public Entrada guardarEntrada(Entrada entrada) {
+        // Establecer fecha actual si no viene establecida
+        if (entrada.getFecha() == null) {
+            entrada.setFecha(LocalDate.now());
+        }
+
+        // Procesar cada detalle de la entrada para actualizar el stock de insumos
+        if (entrada.getDetalles() != null && !entrada.getDetalles().isEmpty()) {
+            for (DetalleEntrada detalle : entrada.getDetalles()) {
+                actualizarStockInsumo(detalle);
+            }
+        }
+
+        // Guardar la entrada
+        return entradaRepository.save(entrada);
+    }
+
+    // Método privado para actualizar el stock del insumo
+    private void actualizarStockInsumo(DetalleEntrada detalle) {
+        if (detalle.getInsumoId() == null) {
+            throw new RuntimeException("El detalle debe tener un ID de insumo válido");
+        }
+
+        Optional<Insumo> insumoOpt = insumoRepository.findById(detalle.getInsumoId());
+
+        if (insumoOpt.isPresent()) {
+            Insumo insumo = insumoOpt.get();
+
+            // Obtener valores actuales
+            Integer stockActual = insumo.getStock();
+            Integer nuevaCantidad = detalle.getCantidad();
+
+            // Calcular nuevo stock
+            Integer nuevoStock = stockActual + nuevaCantidad;
+
+            // Actualizar el insumo (solo el stock)
+            insumo.setStock(nuevoStock);
+
+            // Guardar el insumo actualizado
+            insumoRepository.save(insumo);
+        } else {
+            throw new RuntimeException("No se encontró el insumo con ID: " + detalle.getInsumoId());
+        }
+    }
+
+    // ACTUALIZAR O EDITAR ENTRADA
+    @Transactional
+    public Entrada actualizarEntrada(Entrada entradaActualizada) {
+        // 1. Buscar la entrada original
+        Entrada entradaOriginal = entradaRepository.findById(entradaActualizada.getId())
+                .orElseThrow(() -> new RuntimeException("Entrada no encontrada con ID: " + entradaActualizada.getId()));
+
+        // 2. Revertir stock de insumos según la entrada original
+        if (entradaOriginal.getDetalles() != null) {
+            for (DetalleEntrada detalleOriginal : entradaOriginal.getDetalles()) {
+                Optional<Insumo> insumoOpt = insumoRepository.findById(detalleOriginal.getInsumoId());
+                if (insumoOpt.isPresent()) {
+                    Insumo insumo = insumoOpt.get();
+                    insumo.setStock(insumo.getStock() - detalleOriginal.getCantidad());
+                    insumoRepository.save(insumo);
+                }
+            }
+        }
+
+        // 3. Aplicar el nuevo stock según la entrada actualizada
+        if (entradaActualizada.getDetalles() != null) {
+            for (DetalleEntrada detalleNuevo : entradaActualizada.getDetalles()) {
+                Optional<Insumo> insumoOpt = insumoRepository.findById(detalleNuevo.getInsumoId());
+                if (insumoOpt.isPresent()) {
+                    Insumo insumo = insumoOpt.get();
+                    insumo.setStock(insumo.getStock() + detalleNuevo.getCantidad());
+                    insumoRepository.save(insumo);
+                }
+            }
+        }
+
+        // 4. Guardar la entrada actualizada
+        return entradaRepository.save(entradaActualizada);
+    }
+
+    // ELIMINA ENTRADA
+    public void eliminarEntrada(String id) {
+        // Aquí podríamos implementar la lógica para revertir los cambios en el
+        // inventario
+        entradaRepository.deleteById(id);
+    }
+}

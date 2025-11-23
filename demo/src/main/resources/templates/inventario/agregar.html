@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Agregar Insumo</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/img/icons8-coser-16.png"/>
+
+    <!-- Bootstrap + SB Admin -->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet"/>
+
+    <!-- CSS Personalizado Unificado -->
+    <link rel="stylesheet" href="/css/agregar-insumo.css"/>
+
+    <!-- CSRF -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body id="page-top">
+
+<div id="wrapper">
+    <div layout:fragment="content">
+        <div class="container-fluid">
+
+            <!-- Encabezado -->
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h1 class="page-title">
+                    <i class="fas fa-fw fa-archive"></i> Agregar Nuevo Insumo
+                </h1>
+
+                <a th:href="@{/inventario}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Volver
+                </a>
+            </div>
+
+            <p class="page-description">
+                Completa los campos para registrar un nuevo insumo en el inventario.
+                Asegúrate de ingresar datos correctos para mantener un control eficiente.
+            </p>
+
+            <!-- FORM CARD -->
+            <div class="form-card mt-4">
+                <form id="insumoForm" class="needs-validation" novalidate>
+
+                    <div class="row g-3">
+
+                        <!-- Nombre -->
+                        <div class="col-md-6">
+                            <label class="form-label required">Nombre del insumo</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                            <div class="invalid-feedback">Ingrese un nombre válido.</div>
+                        </div>
+
+                        <!-- Cantidad -->
+                        <div class="col-md-3">
+                            <label class="form-label required">Cantidad</label>
+                            <input type="number" class="form-control" id="cantidad" min="0" step="0.01" required>
+                            <div class="invalid-feedback">Ingrese una cantidad válida.</div>
+                        </div>
+
+                        <!-- Unidad de medida -->
+                        <div class="col-md-3">
+                            <label class="form-label required">Unidad de medida</label>
+                            <select class="form-select" id="unidadM" required>
+                                <option value="" disabled selected>Seleccione</option>
+                                <option value="unidades">Unidades</option>
+                                <option value="kg">Kilogramos</option>
+                                <option value="g">Gramos</option>
+                                <option value="m">Metros</option>
+                                <option value="cm">Centímetros</option>
+                                <option value="m2">Metros cuadrados</option>
+                                <option value="m3">Metros cúbicos</option>
+                                <option value="rollos">Rollos</option>
+                                <option value="cajas">Cajas</option>
+                            </select>
+                            <div class="invalid-feedback">Seleccione una unidad válida.</div>
+                        </div>
+
+                        <!-- BOTONES -->
+                        <div class="col-12 mt-4">
+                            <hr>
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" id="btnLimpiar" class="btn btn-outline-secondary">
+                                    <i class="fas fa-eraser"></i> Limpiar
+                                </button>
+                                <button type="submit" id="btnGuardar" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="scripts">
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Script personalizado -->
+    <script src="/js/agregar-insumo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</div>
+
+</body>
+</html>

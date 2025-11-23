@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Predicción de Agotamiento</title>
+
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        .badge-success {
+            background-color: #1cc88a;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        .badge-danger {
+            background-color: #e74a3b;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Predicción de Agotamiento de Insumos</h1>
+
+            <a th:href="@{/inventario}" class="btn btn-sm btn-secondary shadow-sm">
+                <i class="fas fa-arrow-left fa-sm text-white-50"></i>
+                Volver
+            </a>
+        </div>
+
+        <div class="card shadow mb-4">
+
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Resultados de Predicción</h6>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Nombre del Insumo</th>
+                            <th>Stock Actual</th>
+                            <th>Consumo Promedio (3 meses)</th>
+                            <th>Predicción a agotarse</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="item : ${predicciones}">
+                            <td th:text="${item.nombreInsumo}"></td>
+                            <td th:text="${item.stockActual}"></td>
+
+                            <td th:text="${item.consumoPromedio3m}"></td>
+
+                            <td>
+                                <span class="badge"
+                                      th:classappend="${item.prediccion == 'si'} ? 'badge-danger' : 'badge-success'"
+                                      th:text="${item.prediccion}">
+                                </span>
+                            </td>
+
+                            <td class="text-center">
+                                <button class="btn btn-primary btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#modalAnalisis"
+                                        th:attr="
+                                            data-nombre=${item.nombreInsumo},
+                                            data-stock=${item.stockActual},
+                                            data-consumo=${item.consumoPromedio3m},
+                                            data-pred=${item.prediccion}
+                                        ">
+                                    <i class="fas fa-chart-line"></i> Ver análisis
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal fade" id="modalAnalisis" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Análisis de Predicción</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <p><strong>Insumo:</strong> <span id="mNombre"></span></p>
+                    <p><strong>Stock Actual:</strong> <span id="mStock"></span></p>
+                    <p><strong>Consumo Promedio (3 meses):</strong> <span id="mConsumo"></span></p>
+
+                    <p><strong>Predicción del Modelo:</strong>
+                        <span id="mPrediccion" class="badge"></span>
+                    </p>
+
+                    <hr>
+
+                    <h6>Interpretación automática:</h6>
+                    <p id="mInterpretacion"></p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div layout:fragment="scripts">
+
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('#dataTable').DataTable({
+                "language": {
+                    "url": "/vendor/datatables/spanish.json"
+                }
+            });
+
+            $('#modalAnalisis').on('show.bs.modal', function (event) {
+
+                var button = $(event.relatedTarget);
+
+                var nombre = button.data('nombre');
+                var stock = button.data('stock');
+                var consumo = button.data('consumo');
+                var pred = button.data('pred');
+
+                $('#mNombre').text(nombre);
+                $('#mStock').text(stock);
+                $('#mConsumo').text(consumo);
+
+                var badge = $('#mPrediccion');
+
+                if(pred === 'si'){
+                    badge.removeClass().addClass("badge badge-danger").text("Se agotará");
+                    $('#mInterpretacion').text(
+                        "El modelo detecta alto riesgo de agotamiento. Se recomienda generar reposición inmediata."
+                    );
+                } else {
+                    badge.removeClass().addClass("badge badge-success").text("Stock estable");
+                    $('#mInterpretacion').text(
+                        "El stock del insumo es suficiente según el comportamiento histórico."
+                    );
+                }
+            });
+
+        });
+    </script>
+
+</div>
+
+</body>
+</html>

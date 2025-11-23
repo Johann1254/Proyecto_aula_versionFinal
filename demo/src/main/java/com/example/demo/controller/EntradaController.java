@@ -1,0 +1,89 @@
+package com.example.demo.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.mongo.Entrada;
+import com.example.demo.repos.mongo.EntradaRepository;
+import com.example.demo.service.EntradaService;
+
+@RestController
+@RequestMapping("/api/entradas")
+public class EntradaController {
+
+    @Autowired
+    private EntradaService entradaService;
+
+    @Autowired
+    private EntradaRepository entradaRepository;
+
+    @GetMapping
+    public Map<String, Object> obtenerEntradasPaginadas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fecha").descending());
+        Page<Entrada> paginaEntradas = entradaRepository.findAll(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", paginaEntradas.getContent());
+        response.put("recordsTotal", paginaEntradas.getTotalElements());
+        response.put("recordsFiltered", paginaEntradas.getTotalElements()); // si no hay filtros
+
+        return response;
+    }
+
+    // OBTENER ENTRADA POR ID (GET)
+    @GetMapping("/{id}")
+    public Optional<Entrada> getEntradaById(@PathVariable String id) {
+        return entradaService.obtenerEntradaPorId(id);
+    }
+
+    // CREAR UNA NUEVA ENTRADA (POST)
+    @PostMapping
+    public Entrada createEntrada(@RequestBody Entrada entrada) {
+        return entradaService.guardarEntrada(entrada);
+    }
+
+    // ACTUALIZAR ENTRADA (PUT)
+    @PutMapping("/{id}")
+    public ResponseEntity<Entrada> updateEntrada(@PathVariable String id, @RequestBody Entrada entrada) {
+
+        Optional<Entrada> entradaExistente = entradaService.obtenerEntradaPorId(id);
+
+        if (!entradaExistente.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        entrada.setId(id); // Asignar el ID correcto
+
+        Entrada actualizada = entradaService.actualizarEntrada(entrada);
+
+        return ResponseEntity.ok(actualizada);
+    }
+
+    // ELIMINAR UN INSUMO (DELETE)
+    @DeleteMapping("/{id}")
+    public void deleteEntrada(@PathVariable String id) {
+        entradaRepository.deleteById(id);
+        entradaService.eliminarEntrada(id);
+    }
+
+}

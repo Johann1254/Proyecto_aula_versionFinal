@@ -1,0 +1,107 @@
+/* ------------------------------
+   TARJETA DEL FORMULARIO
+--------------------------------*/
+.form-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  animation: fadeIn 0.4s ease;
+  transition: .3s ease;
+}
+
+.form-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* ------------------------------
+   TITULOS
+--------------------------------*/
+.page-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.page-title i {
+  color: #4e73df;
+  font-size: 1.5rem;
+}
+
+.page-description {
+  max-width: 700px;
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+}
+
+/* ------------------------------
+   LABELS
+--------------------------------*/
+.form-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.form-label.required::after {
+  content: " *";
+  color: #e11d48;
+}
+
+/* ------------------------------
+   INPUTS + SELECTS
+--------------------------------*/
+.form-control,
+.form-select {
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  transition: .25s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #4e73df;
+  box-shadow: 0 0 0 0.15rem rgba(78,115,223,0.25);
+}
+
+/* ------------------------------
+   BOTONES
+--------------------------------*/
+.btn-primary {
+  background-color: #4e73df !important;
+  border-color: #4e73df !important;
+  padding: 9px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: .2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2e59d9 !important;
+  transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+  border-radius: 10px;
+  padding: 9px 24px;
+  font-weight: 600;
+}
+
+/* ------------------------------
+   SEPARADOR
+--------------------------------*/
+hr {
+  border-top: 1px solid #d1d5db;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

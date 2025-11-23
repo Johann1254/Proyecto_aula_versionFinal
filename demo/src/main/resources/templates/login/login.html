@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Inicio de sesión - CostuSoft Control" />
+  <meta name="author" content="CostuSoft" />
+
+  <title>Login - CostuSoft Control</title>
+
+  <!-- FAVICON -->
+  <link rel="icon" type="image/png" href="/img/icons8-coser-16.png" />
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap" rel="stylesheet" />
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Bootstrap y plantilla base -->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+  <!-- Estilo personalizado (nuevo) -->
+  <link rel="stylesheet" href="/css/login_nuevo.css" />
+
+  <!-- CSRF -->
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<body>
+  <div class="login-container">
+    <!-- Sección izquierda (logo) -->
+    <div class="login-left">
+      <img src="/img/Logo_p_t.png" alt="Logo CostuSoft Control" />
+    </div>
+
+    <!-- Sección derecha (formulario) -->
+    <div class="login-right">
+      <div class="text-center">
+        <h2>¡Bienvenido de nuevo!</h2>
+      </div>
+
+      <div th:if="${param.error}">  
+        <p style="color: red;" th:text="${param.error}"></p>
+      </div>
+
+      <form class="user" th:action="@{/login}" method="post">
+        <div class="form-group">
+          <input type="text" class="login-input" id="username" name="username"
+            placeholder="Ingrese su nombre de usuario..." required autofocus />
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="login-input" id="password" name="password" placeholder="Contraseña" required />
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="customCheck" name="remember-me" />
+            Acuérdate de mí
+          </label>
+        </div>
+
+        <button type="submit" class="login-button">Login</button>
+      </form>
+
+
+    </div>
+  </div>
+
+  <!-- JS de Bootstrap -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/sb-admin-2.min.js"></script>
+</body>
+
+</html>

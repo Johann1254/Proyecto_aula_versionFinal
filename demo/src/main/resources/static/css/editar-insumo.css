@@ -1,0 +1,89 @@
+/* ------------------------------
+   CONTENEDOR PRINCIPAL
+--------------------------------*/
+.form-card-custom {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ------------------------------
+   LABELS
+--------------------------------*/
+.label-custom {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.label-custom.required::after {
+  content: " *";
+  color: #e11d48;
+}
+
+/* ------------------------------
+   INPUTS Y SELECTS PERSONALIZADOS
+--------------------------------*/
+.input-custom,
+.select-custom {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+}
+
+.input-custom:focus,
+.select-custom:focus {
+  background: #ffffff;
+  border-color: #4e73df;
+  box-shadow: 0 0 0 0.15rem rgba(78, 115, 223, 0.25);
+  outline: none;
+}
+
+/* ------------------------------
+   BOTONES
+--------------------------------*/
+.btn-custom-primary {
+  background-color: #4e73df;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: white;
+  transition: 0.2s ease;
+}
+
+.btn-custom-primary:hover {
+  background-color: #2e59d9;
+  transform: translateY(-2px);
+}
+
+.btn-custom-secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  border: none;
+  transition: 0.2s ease;
+}
+
+.btn-custom-secondary:hover {
+  background-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+/* ------------------------------
+   ANIMACIÓN
+--------------------------------*/
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

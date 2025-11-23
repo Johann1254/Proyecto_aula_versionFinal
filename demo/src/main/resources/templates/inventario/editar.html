@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <title>Editar Insumo</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/img/icons8-coser-16.png" />
+
+  <!-- Fuentes -->
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet" />
+
+  <!-- Estilos del template -->
+  <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+
+  <!-- Estilos personalizados -->
+  <link href="/css/editar-insumo.css" rel="stylesheet" />
+
+  <!-- CSRF -->
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<body id="page-top">
+
+  <div layout:fragment="content">
+
+    <div class="container-fluid">
+
+      <!-- Título y botón volver -->
+      <div class="d-sm-flex align-items-center justify-content-between mb-2">
+        <h1 class="h3 mb-0 text-gray-800">Editar Insumo</h1>
+      </div>
+
+      <p class="mb-3">
+        Modifica los datos del insumo y guarda los cambios. Puedes actualizar nombre, cantidad y unidad de medida.
+      </p>
+
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="p-4">
+      <form id="insumoForm" th:action="@{/api/insumos/{id}(id=${insumo.id})}" th:method="post" class="needs-validation"
+        novalidate>
+
+        <div class="form-card-custom">
+
+          <!-- ID oculto -->
+          <input type="hidden" id="id" name="id" th:value="${insumo.id}" />
+
+          <div class="row g-3">
+
+            <!-- Nombre -->
+            <div class="col-md-6">
+              <label for="nombre" class="label-custom required">Nombre del insumo</label>
+              <input type="text" class="input-custom" id="nombre" name="nombre" th:value="${insumo.nombre}" required>
+              <div class="invalid-feedback">Ingrese un nombre válido.</div>
+            </div>
+
+            <!-- Cantidad -->
+            <div class="col-md-4">
+              <label for="cantidad" class="label-custom required">Cantidad disponible</label>
+              <input type="number" class="input-custom" id="cantidad" name="stock" th:value="${insumo.stock}" min="0"
+                step="0.01" required>
+              <div class="invalid-feedback">Ingrese una cantidad válida.</div>
+            </div>
+
+            <!-- Unidad -->
+            <div class="col-md-3">
+              <label for="unidadM" class="label-custom required">Unidad de medida</label>
+
+              <select id="unidadM" name="unidadM" class="select-custom" required>
+                <option value="" disabled>Seleccione una unidad</option>
+                <option value="unidades" th:selected="${insumo.unidadM == 'unidades'}">Unidades</option>
+                <option value="kg" th:selected="${insumo.unidadM == 'kg'}">Kilogramos</option>
+                <option value="g" th:selected="${insumo.unidadM == 'g'}">Gramos</option>
+                <option value="m" th:selected="${insumo.unidadM == 'm'}">Metros</option>
+                <option value="cm" th:selected="${insumo.unidadM == 'cm'}">Centímetros</option>
+                <option value="m2" th:selected="${insumo.unidadM == 'm2'}">Metros cuadrados</option>
+                <option value="m3" th:selected="${insumo.unidadM == 'm3'}">Metros cúbicos</option>
+                <option value="rollos" th:selected="${insumo.unidadM == 'rollos'}">Rollos</option>
+                <option value="cajas" th:selected="${insumo.unidadM == 'cajas'}">Cajas</option>
+              </select>
+
+              <div class="invalid-feedback">Seleccione una unidad.</div>
+            </div>
+
+            <!-- Botones -->
+            <div class="col-12 mt-3">
+              <hr>
+              <div class="d-flex justify-content-end gap-3">
+                <button type="submit" id="btnGuardar" class="btn-custom-primary">
+                  <i class="fas fa-save me-1"></i> Guardar Cambios
+                </button>
+              </div>
+
+              <a th:href="@{/inventario}" class="btn-custom-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Volver
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+  <div layout:fragment="scripts">
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Script personalizado -->
+    <script src="/js/editar-insumo.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </div>
+
+</body>
+
+</html>

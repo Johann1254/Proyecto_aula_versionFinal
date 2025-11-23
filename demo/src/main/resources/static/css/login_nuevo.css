@@ -1,0 +1,149 @@
+/* ====== LOGIN NUEVO COSTUSOFT CONTROL ====== */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+  background: url("/img/fondo_login.png") no-repeat center center fixed;
+  background-size: cover; /* Hace que se adapte a toda la pantalla */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ====== Contenedor principal ====== */
+.login-container {
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  max-width: 950px;
+  width: 90%;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ====== Lado izquierdo (logo) ====== */
+.login-left {
+  background-color: #0b3d91;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1.2;             /* Un poco más ancho que el lado del formulario */
+  padding: 2.5rem;
+}
+
+.login-left img {
+  width: 90%;             /* Aumenta el tamaño del logo */
+  max-width: 900px;       /* Permite un tamaño mayor */
+  height: auto;
+  border-radius: 20px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;         /* Centra la imagen horizontalmente */
+}
+
+/* ====== Lado derecho (formulario) ====== */
+.login-right {
+  flex: 1;
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.login-right h2 {
+  color: #0b3d91;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* ====== Inputs ====== */
+.login-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e3e6f0;
+  border-radius: 25px;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-input:focus {
+  border-color: #0b3d91;
+  box-shadow: 0 0 5px rgba(11, 61, 145, 0.4);
+}
+
+/* ====== Checkbox ====== */
+.checkbox-label {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+/* ====== Botón principal ====== */
+.login-button {
+  background-color: #0b3d91;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #49c21b; /* Verde del logo */
+  transform: scale(1.03);
+}
+
+/* ====== Links inferiores ====== */
+.links {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.links a {
+  color: #0b3d91;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: #49c21b;
+  text-decoration: underline;
+}
+
+/* ====== Responsivo ====== */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    max-width: 400px;
+  }
+
+  .login-left {
+    padding: 1.5rem;
+  }
+
+  .login-left img {
+    width: 60%;
+    max-width: 200px;
+  }
+
+  .login-right {
+    padding: 2rem 1.5rem;
+  }
+}

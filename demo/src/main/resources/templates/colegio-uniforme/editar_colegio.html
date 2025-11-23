@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout_u}">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Colegio</title>
+    <link rel="icon" type="image/png" href="/img/icons8-coser-16.png" />
+    <link rel="stylesheet" href="/css/colegio_form.css">
+
+</head>
+
+<div layout:fragment="content">
+    <div class="container mt-5 mb-5">
+        <div class="card shadow p-4">
+
+            <h3 class="text-center mb-4">Editar Colegio</h3>
+
+            <input type="hidden" id="idColegio" th:value="${id}">
+
+            <!-- Información del Colegio -->
+            <div class="section-title">Información del Colegio</div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>Nombre del colegio</label>
+                    <input type="text" id="nombreColegio" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label>Dirección</label>
+                    <input type="text" id="direccionColegio" class="form-control">
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Información del Uniforme (igual al registrar) -->
+            <div class="section-title">Datos del Uniforme</div>
+
+            <div class="mb-3">
+                <label>Género</label><br>
+                <label class="me-3"><input type="radio" name="genero" value="Masculino" checked> Masculino</label>
+                <label><input type="radio" name="genero" value="Femenino"> Femenino</label>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Tipo</label>
+                    <select id="tipo" class="form-select">
+                        <option value="">Seleccione un tipo</option>
+                        <option value="Diario">Diario</option>
+                        <option value="Educación física">Educación física</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Prenda</label>
+                    <select id="prenda" class="form-select">
+                        <option value="">Seleccione un tipo primero</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label>Talla</label>
+                    <select id="talla" class="form-select">
+                        <option value="">Seleccione una prenda</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="section-title">Insumos del Uniforme</div>
+            <div class="row g-2 mb-3">
+                <div class="col-md-4">
+                    <label>Insumo</label>
+                    <select id="insumoSelect" class="form-select"></select>
+                </div>
+                <div class="col-md-3">
+                    <label>Unidad</label>
+                    <input type="text" id="unidadMedida" class="form-control" placeholder="Unidad">
+                </div>
+                <div class="col-md-3">
+                    <label>Cantidad</label>
+                    <input type="number" id="cantidadInsumo" class="form-control">
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-primary" id="btnAgregarInsumo">+ Agregar</button>
+                </div>
+            </div>
+
+            <table class="table table-sm table-bordered mb-4" id="tablaInsumos">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Unidad</th>
+                        <th>Cantidad</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="text-end mb-4">
+                <button class="btn btn-secondary" id="btnAgregarUniforme">Agregar Uniforme</button>
+            </div>
+
+            <div class="section-title">Uniformes agregados</div>
+            <table class="table table-bordered" id="tablaUniformes">
+                <thead>
+                    <tr>
+                        <th>Prenda</th>
+                        <th>Tipo</th>
+                        <th>Talla</th>
+                        <th>Género</th>
+                        <th># Insumos</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="text-end mt-3">
+                <button class="btn btn-success" id="btnGuardar">Guardar Cambios</button>
+                <a th:href="@{/colegio/listar}" class="btn btn-secondary me-2">
+                    Volver
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div layout:fragment="scripts">
+    <script src="/js/editar_colegio.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        cargarInsumos();
+    </script>
+</div>
+
+
+
+</html>
