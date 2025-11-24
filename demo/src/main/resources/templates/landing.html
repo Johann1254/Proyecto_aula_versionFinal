@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <!-- Estilos -->
   <link rel="stylesheet" th:href="@{/css/landing.css}">
 </head>
+
 <body>
   <!-- ===== NAVBAR ===== -->
   <header class="navbar">
@@ -46,9 +48,10 @@
   <section id="about" class="section about">
     <h2>Sobre el Sistema</h2>
     <p>
-      CostuSoft Control es una solución integral que facilita la gestión de inventarios y pedidos.
-      Diseñado especialmente para empresas textiles, permite mantener el control total.
-    </p>
+      Y este es el texto : CostuSoft Control es una solución integral diseñada para optimizar la gestión de inventarios
+      en empresas de confección textil.
+      Permite registrar entradas y salidas de insumos, llevar un control preciso de las existencias, y complementar la
+      operación con una calculadora textil que facilita estimar el consumo de materiales para cada pedido. </p>
   </section>
 
   <!-- ===== FEATURES ===== -->
@@ -61,10 +64,13 @@
         <p>Gestiona entradas, salidas y niveles de stock en tiempo real.</p>
       </div>
       <div class="feature-card">
-        <i class="fas fa-shopping-cart"></i>
-        <h3>Gestión de Pedidos</h3>
-        <p>Controla pedidos por cliente, estado y fecha de entrega.</p>
+        <i class="fas fa-calculator"></i>
+        <h3>Calculadora Textil Inteligente</h3>
+        <p>Estima automáticamente el consumo de insumos por prenda o pedido, optimizando el uso de materiales y
+          reduciendo desperdicios.</p>
+            
       </div>
+
       <div class="feature-card">
         <i class="fas fa-chart-line"></i>
         <h3>Reportes en Línea</h3>
@@ -82,7 +88,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
-    <p>© 2025 CostuSoft Control — Sistema de Inventario y Pedidos</p>
+    <p>© 2025 CostuSoft Control — Sistema de Inventario</p>
   </footer>
 
   <!-- ===== SCRIPT ===== -->
@@ -96,7 +102,7 @@
 
     // Scroll suave
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
+      anchor.addEventListener('click', function (e) {
         e.preventDefault();
         document.querySelector(this.getAttribute('href')).scrollIntoView({
           behavior: 'smooth'
@@ -105,4 +111,5 @@
     });
   </script>
 </body>
+
 </html>
